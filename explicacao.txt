@@ -1,0 +1,60 @@
+Projeto: Petshop - Refatoração com Princípios SOLID
+
+Objetivo: Refatorar o código do projeto Petshop para aplicar corretamente os princípios SOLID, 
+tornando o código mais modular, flexível e de fácil manutenção.
+
+Princípios SOLID e Correções Realizadas
+
+1. SRP (Single Responsibility Principle) - Princípio da Responsabilidade Única:
+
+Problema no código original: A classe PetshopController tinha múltiplas responsabilidades, 
+como validação de dados e persistência no "banco de dados".
+
+Solução: A validação foi movida para uma classe ValidadorCliente dedicada, 
+e a manipulação de dados foi colocada na interface ClienteRepositoryInterface 
+e sua implementação ClienteRepository. Isso separa as responsabilidades e facilita a manutenção.
+
+2. OCP (Open/Closed Principle) - Princípio do Aberto/Fechado:
+
+Problema no código original: O código não estava preparado para extensão. 
+Qualquer mudança na lógica de validação ou persistência exigiria modificações no controlador.
+
+Solução: O código foi estruturado para ser fechado para modificações e aberto para extensão. 
+A lógica de persistência e validação foi movida para classes separadas que podem ser estendidas 
+ou substituídas sem modificar o controlador.
+
+3. LSP (Liskov Substitution Principle) - Princípio da Substituição de Liskov:
+
+Problema no código original: Se o PetshopController fosse herdado, as subclasses poderiam modifica
+ o comportamento de maneira inesperada, quebrando a lógica original.
+
+Solução: O comportamento das operações CRUD (salvar, buscar, atualizar, excluir) foi movido para 
+uma interface (ClienteRepositoryInterface) e uma implementação (ClienteRepository), 
+garantindo que subclasses mantenham o comportamento esperado.
+
+4. ISP (Interface Segregation Principle) - Princípio da Segregação de Interface:
+
+Problema no código original: A classe PetshopController lidava com todas as operações, 
+sem segregação de responsabilidades específicas. Isso poderia levar a um acoplamento excessivo em operações futuras.
+
+Solução: A interface ClienteRepositoryInterface foi criada para segregar as responsabilidades relacionadas a CRUD, 
+permitindo que futuras implementações possam escolher implementar apenas o que é necessário.
+
+5. DIP (Dependency Inversion Principle) - Princípio da Inversão de Dependência:
+
+Problema no código original: O controlador dependia diretamente de implementações concretas para validação e persistência de dados.
+
+Solução: Agora, o controlador (PetshopController) depende de abstrações (ValidadorCliente e ClienteRepositoryInterface), o que facilita a substituição dessas dependências por novas implementações no futuro, sem alterar o controlador.
+
+Benefícios da Refatoração:
+
+• Modularidade: O código foi dividido em pequenas classes com responsabilidades específicas, facilitando a manutenção e entendimento.
+
+• Extensibilidade: As classes podem ser estendidas ou substituídas sem afetar outras partes do sistema, 
+respeitando o princípio do aberto/fechado (OCP).
+
+• Baixo acoplamento: O controlador agora depende de abstrações, o que permite maior flexibilidade para 
+substituir componentes, como a camada de persistência.
+
+• Facilidade de manutenção: Com a separação de responsabilidades, o código é mais fácil de atualizar e corrigir, 
+minimizando o impacto de mudanças.
